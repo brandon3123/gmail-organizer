@@ -1,9 +1,14 @@
 from __future__ import print_function
+from apiRoutes.ApiRoute import ApiRoute
 
 
-class Messages:
+class Messages(ApiRoute):
 
-    @staticmethod
-    def getAllMessages(service):
-        results = service.users().messages().list(userId='me').execute()
-        return results
+    def get_all_messages(self):
+        return self.messages_api().list(userId='me').execute()
+
+    def get_message(self, id):
+        return self.messages_api().get(id=id).execute()
+
+    def messages_api(self):
+        return super().gmail_api().users().messages()
