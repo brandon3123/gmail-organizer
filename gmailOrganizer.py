@@ -9,11 +9,10 @@ def main():
     messages_api = Messages()
 
     results = messages_api.get_all_messages()
-    print(results)
 
-    for message in results:
-        # messages_api.get_message(message['id'])
-        print(message['id'])
+    for message in results['messages']:
+        messagesData = messages_api.get_message(message['id'])
+        print(messagesData)
 
 if __name__ == '__main__':
     main()
