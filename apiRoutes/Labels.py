@@ -1,5 +1,6 @@
 from apiRoutes.ApiRoute import ApiRoute
 
+
 class Labels(ApiRoute):
 
     def get_all_labels(self):
