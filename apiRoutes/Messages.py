@@ -21,7 +21,7 @@ class Messages(ApiRoute):
         return self.api().get(userId='me', id=id).execute()
 
     def send_message(self, to, subject, body):
-        message = self.create_message(to, subject, body)
+        message = self.message_json(to, subject, body)
 
         message = self.api().send(userId='jodieemaee@gmail.com', body=message).execute()
         return message
@@ -29,7 +29,7 @@ class Messages(ApiRoute):
     def api(self):
         return super().gmail_api().users().messages()
 
-    def create_message(sender, to, subject, message_text):
+    def message_json(self, sender, to, subject, message_text):
         """Create a message for an email.
 
         Args:
@@ -43,6 +43,6 @@ class Messages(ApiRoute):
         """
         message = MIMEText(message_text)
         message['To'] = to
-        # message['From'] = sender
+        message['From'] = sender
         message['Subject'] = subject
         return {'raw': base64.urlsafe_b64encode(message.as_string())}

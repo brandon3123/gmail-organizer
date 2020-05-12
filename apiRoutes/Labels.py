@@ -1,24 +1,5 @@
 from apiRoutes.ApiRoute import ApiRoute
 
-
-def label_json(label_name, message_visibility='show', label_visibility='labelShow'):
-    """Create Label object.
-
-    Args:
-      label_name: The name of the Label.
-      message_visibility: Message list visibility, show/hide.
-      label_visibility: Label list visibility, labelShow/labelHide.
-
-    Returns:
-      Created Label.
-    """
-    label = {'messageListVisibility': message_visibility,
-             'name': label_name,
-             'labelListVisibility': label_visibility}
-
-    return label
-
-
 class Labels(ApiRoute):
 
     def get_all_labels(self):
@@ -33,3 +14,20 @@ class Labels(ApiRoute):
 
     def api(self):
         return super().gmail_api().users().labels()
+
+    def label_json(self, label_name, message_visibility='show', label_visibility='labelShow'):
+        """Create Label object.
+
+        Args:
+          label_name: The name of the Label.
+          message_visibility: Message list visibility, show/hide.
+          label_visibility: Label list visibility, labelShow/labelHide.
+
+        Returns:
+          Created Label.
+        """
+        label = {'messageListVisibility': message_visibility,
+                 'name': label_name,
+                 'labelListVisibility': label_visibility}
+
+        return label
