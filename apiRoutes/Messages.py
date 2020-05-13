@@ -14,6 +14,13 @@ from apiclient import errors
 
 class Messages(ApiRoute):
 
+    def add_labels(self, id, labels):
+        payload = self.labels_json(labels)
+        return self.api().modify(userId='me', id=id, body=payload).execute()
+
+    def messages_with_criteria(self, criteria):
+        return self.api().list(userId='me', q=criteria).execute()['messages']
+
     def get_all_messages(self):
         return self.api().list(userId='me').execute()
 
@@ -46,3 +53,11 @@ class Messages(ApiRoute):
         message['From'] = sender
         message['Subject'] = subject
         return {'raw': base64.urlsafe_b64encode(message.as_string())}
+
+    def labels_json(self, add=[], remove=[]):
+        """Create object to update labels.
+
+        Returns:
+          A label update object.
+        """
+        return {'removeLabelIds': remove, 'addLabelIds': add}
