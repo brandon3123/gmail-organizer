@@ -1,41 +1,33 @@
 from apiRoutes.Messages import Messages
-from services.LabelService import LabelService
+from services.FilterService import FilterService
+from enums.Label import Label
 
 messages_api = Messages()
-label_service = LabelService()
+filter_service = FilterService()
 
 
 class MessageService:
 
-    def sort_transfers(self):
-        e_transfer_email = 'catch@payments.interac.ca'
-        e_transfers = messages_api.messages_with_criteria('from:' + e_transfer_email)
+    def messages_from_inside_inbox(self, from_email):
+        filter = filter_service.from_email_with_label(from_email, Label.INBOX.value)
+        return self.messages_with_criteria(filter)
 
-        e_transfers = [e_transfers[0]]
-        if len(e_transfers) > 0:
-            labels = label_service.all_labels()
-            e_transfer_parent_label = label_service.label_with_name(labels, 'E- Transfers')
+    def messages_from_with_label(self, from_email, label):
+        filter = filter_service.from_email_with_label(from_email, label)
+        return self.messages_with_criteria(filter)
 
-            for transfer_data in e_transfers:
-                message = messages_api.get_message(transfer_data['id'])
+    def messages_from(self, from_email):
+        filter = filter_service.from_email(from_email)
+        return self.messages_with_criteria(filter)
 
-                from_header = self.sender(message)[:-(len(e_transfer_email) + 3)]
+    def get_message(self, id):
+        return messages_api.get_message(id)
 
-                prefix = label_service.name(e_transfer_parent_label) + '/'
-                transfer_label_name = prefix + from_header + ' e-transfers'
+    def edit_labels(self, message_id, to_add, to_remote):
+        return messages_api.edit_labels(message_id, to_add, to_remote)
 
-                label = label_service.label_with_name(labels, transfer_label_name)
-
-                if label is None:
-                    bg_color = label_service.bg_color(e_transfer_parent_label)
-                    text_color = label_service.text_color(e_transfer_parent_label)
-
-                    label = label_service.create_label_with_color(transfer_label_name, bg_color, text_color)
-                    # label = label_service.update_label(label['id'], bg_color, text_color)
-
-                print(label)
-
-
+    def messages_with_criteria(self, criteria):
+        return messages_api.messages_with_criteria(criteria)
 
     def sender(self, message):
         headers = message['payload']['headers']

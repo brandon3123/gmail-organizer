@@ -14,8 +14,8 @@ from apiclient import errors
 
 class Messages(ApiRoute):
 
-    def add_labels(self, id, labels):
-        payload = self.labels_json(labels)
+    def edit_labels(self, id, to_add, to_remove):
+        payload = self.labels_json(to_add, to_remove)
         return self.api().modify(userId='me', id=id, body=payload).execute()
 
     def messages_with_criteria(self, criteria):

@@ -1,20 +1,14 @@
 from __future__ import print_function
-from apiRoutes.Messages import Messages
-from apiRoutes.Labels import Labels
-from services.LabelService import LabelService
-from services.MessageService import MessageService
+from services.EmailSortingService import EmailSortingService
 
-messages_api = Messages()
-labels_api = Labels()
-message_service = MessageService()
-label_service = LabelService()
 
+sorting_service = EmailSortingService()
 
 
 def main():
 
     # results = messages_api.get_all_messages()
-    message_service.sort_transfers()
+    sorting_service.sort_money_transfers()
 
     # label_service.create_label('test')
 
