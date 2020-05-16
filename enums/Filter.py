@@ -7,3 +7,5 @@ class Filter(Enum):
     """
     FROM = 'from:'
     LABEL = 'label:'
+    IN = 'in:'
+    CATEGORY = 'category:'

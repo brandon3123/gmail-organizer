@@ -8,3 +8,9 @@ class FilterService:
 
     def from_email(self, from_email):
         return Filter.FROM.value + from_email
+
+    def in_folder(self, folder_name):
+        return Filter.IN.value + folder_name
+
+    def category(self, category):
+        return Filter.CATEGORY.value + category
