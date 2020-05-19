@@ -1,4 +1,5 @@
 from apiRoutes.Labels import Labels
+from enums.Color import Color
 
 label_api = Labels()
 
@@ -14,11 +15,20 @@ class LabelService:
     def create_label_with_color(self, name, bg_color, text_color):
         return label_api.create_label_with_color(name, bg_color, text_color)
 
-    def label_with_name(self, labels, name):
-        for label in labels:
+    def label_with_name(self, name):
+        for label in self.all_labels():
             if label['name'] == name:
                 return label
         return None
+
+    def create_label_if_not_found(self,
+                                  label_name,
+                                  bg_color,
+                                  text_color=Color.WHITE_GRAY.value):
+        label = self.label_with_name(label_name)
+        if label is None:
+            label = self.create_label_with_color(label_name, bg_color, text_color)
+        return label;
 
     def name(self, label):
         return label['name']

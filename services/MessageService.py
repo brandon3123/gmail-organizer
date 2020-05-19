@@ -11,7 +11,11 @@ class MessageService:
 
     def get_promotions(self):
         filter = filter_service.category(Category.PROMOTIONS.value)
-        return self.messages_with_criteria(filter)
+        return self.fetch_email_ids_matching_criteria(filter)
+
+    def get_socials(self):
+        filter = filter_service.category(Category.SOCIAL.value)
+        return self.fetch_email_ids_matching_criteria(filter)
 
     def delete_messages(self, message_ids):
         return messages_api.delete_messages(message_ids)
@@ -33,6 +37,21 @@ class MessageService:
 
     def edit_labels(self, message_id, to_add, to_remote):
         return messages_api.edit_labels(message_id, to_add, to_remote)
+
+    def fetch_email_ids_from_sender(self,
+                                    from_email):
+        emails_found = self.messages_from_inside_inbox(from_email)
+        return self.id_array_from_messages(emails_found)
+
+    def fetch_email_ids_matching_criteria(self,
+                                    criteria):
+        emails_found = self.messages_with_criteria(criteria)
+        return self.id_array_from_messages(emails_found)
+
+    def add_messages_to_labels_and_remove_from_inbox(self,
+                                    message_ids,
+                                    label_ids):
+        return messages_api.edit_labels_for_message_ids(message_ids, label_ids, [Label.INBOX.value])
 
     def move_to_tash(self, message_ids):
         return messages_api.edit_labels_for_message_ids(message_ids, [Label.TRASH.value], [Label.INBOX.value])

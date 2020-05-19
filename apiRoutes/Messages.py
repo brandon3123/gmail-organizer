@@ -1,7 +1,7 @@
 from __future__ import print_function
 from apiRoutes.ApiRoute import ApiRoute
-import base64
 from email.mime.text import MIMEText
+import base64
 
 
 class Messages(ApiRoute):
@@ -10,20 +10,34 @@ class Messages(ApiRoute):
                                     message_ids,
                                     to_add,
                                     to_remove):
-        payload = self.__batch_message_labels_json(message_ids, to_add, to_remove)
-        return self.api().batchModify(userId='me', body=payload).execute()
+        if len(message_ids) > 1000:
+            message_chunks = [message_ids[x:x + 1000] for x in range(0, len(message_ids), 1000)]
+            response = ''
+            for chunk in message_chunks:
+                payload = self.__batch_message_labels_json(chunk, to_add, to_remove)
+                response += self.api().batchModify(userId='me', body=payload).execute()
+            return response
+        else:
+            payload = self.__batch_message_labels_json(message_ids, to_add, to_remove)
+            return self.api().batchModify(userId='me', body=payload).execute()
+
 
     def delete_messages(self, message_ids):
         return self.api().batchDelete(userId='me', body={'ids': message_ids}).execute()
 
     def edit_labels(self, id, to_add, to_remove):
-        payload = self.labels_json(to_add, to_remove)
+        payload = self.__labels_json(to_add, to_remove)
         return self.api().modify(userId='me', id=id, body=payload).execute()
 
     def messages_with_criteria(self, criteria):
-        messages = self.api().list(userId='me', q=criteria).execute()
-        if self.__isNotEmpty(messages):
-            return messages['messages']
+        results = self.api().list(userId='me', q=criteria).execute()
+        messages = list()
+        if self.__is_not_empty(results):
+            messages += results['messages']
+            while self.__has_next_page(results):
+                results = self.api().list(userId='me', q=criteria, pageToken=results['nextPageToken']).execute()
+                messages += results['messages']
+            return messages
         else:
             return []
 
@@ -68,7 +82,7 @@ class Messages(ApiRoute):
         """
         return {'ids': message_ids, 'removeLabelIds': remove, 'addLabelIds': add}
 
-    def labels_json(self, add=[], remove=[]):
+    def __labels_json(self, add=[], remove=[]):
         """Create object to update labels.
 
         Returns:
@@ -76,5 +90,9 @@ class Messages(ApiRoute):
         """
         return {'removeLabelIds': remove, 'addLabelIds': add}
 
-    def __isNotEmpty(self, results):
+    def __is_not_empty(self, results):
         return results['resultSizeEstimate'] > 0
+
+    def __has_next_page(self, results):
+        has_next_page = 'nextPageToken' in results
+        return has_next_page

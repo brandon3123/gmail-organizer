@@ -6,3 +6,4 @@ class Category(Enum):
         G-mail Categories
     """
     PROMOTIONS = 'promotions'
+    SOCIAL = 'social'
