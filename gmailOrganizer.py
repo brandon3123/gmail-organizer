@@ -17,20 +17,12 @@ TO_DELETE_FROM = [
 ]
 
 def main():
-
-    # results = messages_api.get_all_messages()
-    # sorting_service.sort_money_transfers()
-    # sorting_service.sort_job_postings()
-    # sorting_service.sort_amazon_orders()
-    # label_service.create_label('test')
-    # sorting_service.delete_emails_from(TO_DELETE_FROM)
-    # sorting_service.delete_promotions()
-
     sorting_service.sort_job_postings()
-    sorting_service.sort_amazon_orders()
+    sorting_service.sort_online_orders()
     sorting_service.sort_rentals()
     sorting_service.delete_promotions()
     sorting_service.delete_social()
+    # sorting_service.delete_emails_from(TO_DELETE_FROM)
 
 if __name__ == '__main__':
     main()

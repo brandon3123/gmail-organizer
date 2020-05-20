@@ -13,6 +13,7 @@ class Label(Enum):
     GLASS_DOOR = 'Glass Door'
     JOB_POSTINGS = 'Job Postings'
     E_TRANSFERS = 'E- Transfers'
-    AMAZON = 'Amazon Orders'
+    AMAZON = 'Amazon'
+    ONLINE_ORDERS = 'Online Orders'
     RENTALS = 'Rentals'
     RENT_FASTER = 'Rent Faster'

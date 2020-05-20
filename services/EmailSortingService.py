@@ -31,11 +31,11 @@ class EmailSortingService:
     def sort_money_transfers(self):
         self.__sort_emails(Email.E_TRANSFER.value, Label.E_TRANSFERS.value)
 
-    def sort_amazon_orders(self):
+    def sort_online_orders(self):
         print('***********************************')
         print('***   Sorting Amazon Orders     ***')
         print('***********************************')
-        self.__sort_emails_from_to_working_label(Email.AMAZON_DOMAIN.value, Label.AMAZON.value, Color.AMAZON_ORANGE.value)
+        self.__sort_emails_from_with_parent_label(Email.AMAZON_DOMAIN.value,  Label.ONLINE_ORDERS.value, Label.AMAZON.value, Color.AMAZON_ORANGE.value)
 
     def sort_rentals(self):
         print('*******************************')
@@ -142,8 +142,6 @@ class EmailSortingService:
                       label_color=None):
         # Fetch emails
         emails = message_service.messages_from_inside_inbox(from_email)
-        # User the below when not testing.
-        # emails = message_service.messages_from_inside_inbox(from_email)
 
         if len(emails) > 0:
             # Fetch all labels
