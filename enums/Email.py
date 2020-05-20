@@ -17,3 +17,5 @@ class Email(Enum):
     TILE_NO_REPLY = 'no-reply@email.thetileapp.com'
     RENT_FASTER = 'info@rentfaster.ca'
     TURBO_TAX = 'TurboTax@e.turbotax.intuit.com'
+    GITHUB_NO_REPLY = 'noreply@github.com'
+    GITHUB_NOTIFICATIONS = 'notifications@github.com'
