@@ -15,5 +15,6 @@ class Label(Enum):
     E_TRANSFERS = 'E- Transfers'
     AMAZON = 'Amazon'
     ONLINE_ORDERS = 'Online Orders'
+    INTELCOM = 'Intelcom'
     RENTALS = 'Rentals'
     RENT_FASTER = 'Rent Faster'

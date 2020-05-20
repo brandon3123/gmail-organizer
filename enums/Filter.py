@@ -9,3 +9,4 @@ class Filter(Enum):
     LABEL = 'label:'
     IN = 'in:'
     CATEGORY = 'category:'
+    SUBJECT = 'subject:'

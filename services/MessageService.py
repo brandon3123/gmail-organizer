@@ -1,35 +1,39 @@
 from apiRoutes.Messages import Messages
-from services.FilterService import FilterService
+from utils.FilterUtil import FilterUtil
 from enums.Label import Label
 from enums.Category import Category
 
 messages_api = Messages()
-filter_service = FilterService()
 
 
 class MessageService:
 
     def get_promotions(self):
-        filter = filter_service.category(Category.PROMOTIONS.value)
+        filter = FilterUtil.category(Category.PROMOTIONS.value)
         return self.fetch_email_ids_matching_criteria(filter)
 
     def get_socials(self):
-        filter = filter_service.category(Category.SOCIAL.value)
+        filter = FilterUtil.category(Category.SOCIAL.value)
         return self.fetch_email_ids_matching_criteria(filter)
 
     def delete_messages(self, message_ids):
         return messages_api.delete_messages(message_ids)
 
+    def message_ids_with_criteria_inside_inbox(self, criteria):
+        filter = criteria + FilterUtil.in_folder(Label.INBOX.value)
+        messages = self.messages_with_criteria(filter)
+        return self.id_array_from_messages(messages)
+
     def messages_from_inside_inbox(self, from_email):
-        filter = filter_service.from_email_with_label(from_email, Label.INBOX.value)
+        filter = FilterUtil.from_email_with_label(from_email, Label.INBOX.value)
         return self.messages_with_criteria(filter)
 
     def messages_from_with_label(self, from_email, label):
-        filter = filter_service.from_email_with_label(from_email, label)
+        filter = FilterUtil.from_email_with_label(from_email, label)
         return self.messages_with_criteria(filter)
 
     def messages_from(self, from_email):
-        filter = filter_service.from_email(from_email)
+        filter = FilterUtil.from_email(from_email)
         return self.messages_with_criteria(filter)
 
     def get_message(self, id):

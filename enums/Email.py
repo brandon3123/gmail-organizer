@@ -19,3 +19,4 @@ class Email(Enum):
     TURBO_TAX = 'TurboTax@e.turbotax.intuit.com'
     GITHUB_NO_REPLY = 'noreply@github.com'
     GITHUB_NOTIFICATIONS = 'notifications@github.com'
+    INTELCOM_DOMAIN = '@intelcomexpress.com '
