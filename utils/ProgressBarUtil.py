@@ -3,19 +3,20 @@ import progressbar
 
 class ProgressBarUtil:
     bar = None
-    progress = 0
+    progress = 1
 
     @staticmethod
     def start_progress():
-        # ProgressBarUtil.bar = progressbar.ProgressBar().start()
-        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=11, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=16, redirect_stdout=True, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         ProgressBarUtil.bar.start()
 
     @staticmethod
-    def update_progress():
+    def update_progress(message):
+        print(message)
         ProgressBarUtil.bar.update(ProgressBarUtil.progress)
         ProgressBarUtil.progress += 1
 
     @staticmethod
     def end_progress():
         ProgressBarUtil.bar.finish()
+

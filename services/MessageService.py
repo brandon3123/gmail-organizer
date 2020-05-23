@@ -17,13 +17,13 @@ class MessageService:
         return self.fetch_email_ids_matching_criteria(filter)
 
     def delete_messages(self, message_ids):
-        if len(message_ids > 0):
+        if len(message_ids) > 0:
             return messages_api.delete_messages(message_ids)
         else:
-            return None
+            return []
 
     def message_ids_with_criteria_inside_inbox(self, criteria):
-        filter = criteria + FilterUtil.in_folder(Label.INBOX.value)
+        filter = criteria + ' ' + FilterUtil.in_folder(Label.INBOX.value)
         messages = self.messages_with_criteria(filter)
         return self.id_array_from_messages(messages)
 
@@ -70,6 +70,10 @@ class MessageService:
         headers = message['payload']['headers']
         from_header = self.header_value(headers, 'From')
         return from_header
+
+    def sender_name(self, message):
+        sender_header = self.sender(message)
+        return sender_header.split('<')[0][0:-1]
 
     def header_value(self, headers, header_name):
         for header in headers:

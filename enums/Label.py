@@ -17,4 +17,7 @@ class Label(Enum):
     ONLINE_ORDERS = 'Online Orders'
     INTELCOM = 'Intelcom'
     RENTALS = 'Rentals'
+    GOOGLE_ALERTS = 'Google Alerts'
+    GOOGLE_ACCOUNT = 'Account'
     RENT_FASTER = 'Rent Faster'
+    RECEIPTS = 'Receipts'

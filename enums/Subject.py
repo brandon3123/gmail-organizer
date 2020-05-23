@@ -5,4 +5,5 @@ class Subject(Enum):
     """
         Subjects to search for
     """
-    RBC_E_STATEMENT = 'your rbc royal bank estatement is ready '
+    RBC_E_STATEMENT = 'your rbc royal bank estatement is ready'
+    RECEIPT = 'receipt'
