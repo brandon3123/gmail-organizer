@@ -17,7 +17,10 @@ class MessageService:
         return self.fetch_email_ids_matching_criteria(filter)
 
     def delete_messages(self, message_ids):
-        return messages_api.delete_messages(message_ids)
+        if len(message_ids > 0):
+            return messages_api.delete_messages(message_ids)
+        else:
+            return None
 
     def message_ids_with_criteria_inside_inbox(self, criteria):
         filter = criteria + FilterUtil.in_folder(Label.INBOX.value)

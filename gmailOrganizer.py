@@ -1,21 +1,9 @@
 from services.EmailDeletingService import EmailDeletingService
 from utils.ProgressBarUtil import ProgressBarUtil
 from services.EmailSortingService import EmailSortingService
-from enums.Email import Email
-
 
 sorting_service = EmailSortingService()
 deletion_service = EmailDeletingService()
-
-TO_DELETE_FROM = [
-    Email.LINKEDIN_DOMAIN.value,
-    Email.SAIT_ALUMNI.value,
-    Email.COURSERA_NO_REPLY.value,
-    Email.TILE_NO_REPLY.value,
-    Email.TURBO_TAX.value,
-    Email.GITHUB_NO_REPLY.value,
-    Email.GITHUB_NOTIFICATIONS.value
-]
 
 def main():
     ProgressBarUtil.start_progress()
