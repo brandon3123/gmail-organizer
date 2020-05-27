@@ -15,42 +15,40 @@ class EmailSortingService:
 
     def sort_receipts(self):
         receipts_sorted = self.__sort_emails_with_subject_with_parent_label_to_sender(Subject.RECEIPT.value, Label.RECEIPTS.value, Color.BRIGHT_RED.value)
-        ProgressBarUtil.update_progress(' \rReceipts sorted: ' + str(receipts_sorted))
+        ProgressBarUtil.update_progress('\r' + Label.RECEIPTS.value + ' sorted: ', receipts_sorted)
 
     def sort_job_postings(self):
-        self.__sort_emails_from_with_parent_label(Email.INDEED.value, Label.JOB_POSTINGS.value, Label.INDEED.value, Color.BRIGHT_RED.value)
-        ProgressBarUtil.update_progress('indeed emails sorted: ' + str(1))#--+ str(len(indeed_sorted)))
+        indeed_sorted = self.__sort_emails_from_with_parent_label(Email.INDEED.value, Label.JOB_POSTINGS.value, Label.INDEED.value, Color.BRIGHT_RED.value)
+        ProgressBarUtil.update_progress(Label.INDEED.value + ' sorted: ', indeed_sorted)
 
-        self.__sort_emails_from_with_parent_label(Email.WORKOPOLIS.value, Label.JOB_POSTINGS.value, Label.WORKOPOLIS.value, Color.BRIGHT_RED.value)
-        ProgressBarUtil.update_progress('')
+        workopolis_sorted = self.__sort_emails_from_with_parent_label(Email.WORKOPOLIS.value, Label.JOB_POSTINGS.value, Label.WORKOPOLIS.value, Color.BRIGHT_RED.value)
+        ProgressBarUtil.update_progress(Label.WORKOPOLIS.value + ' sorted: ', workopolis_sorted)
 
-        self.__sort_emails_from_with_parent_label(Email.NEUVOO.value, Label.JOB_POSTINGS.value, Label.NEUVOO.value, Color.BRIGHT_RED.value)
-        ProgressBarUtil.update_progress('')
+        neuvoo_sorted = self.__sort_emails_from_with_parent_label(Email.NEUVOO.value, Label.JOB_POSTINGS.value, Label.NEUVOO.value, Color.BRIGHT_RED.value)
+        ProgressBarUtil.update_progress(Label.NEUVOO.value + ' sorted: ', neuvoo_sorted)
 
-        self.__sort_emails_from_with_parent_label(Email.GLASS_DOOR.value, Label.JOB_POSTINGS.value, Label.GLASS_DOOR.value, Color.BRIGHT_RED.value)
-        ProgressBarUtil.update_progress('')
+        glass_door_sorted = self.__sort_emails_from_with_parent_label(Email.GLASS_DOOR.value, Label.JOB_POSTINGS.value, Label.GLASS_DOOR.value, Color.BRIGHT_RED.value)
+        ProgressBarUtil.update_progress(Label.GLASS_DOOR.value + ' sorted: ', glass_door_sorted)
 
     def sort_money_transfers(self):
-        self.__sort_emails(Email.E_TRANSFER.value, Label.E_TRANSFERS.value)
-        ProgressBarUtil.update_progress('')
+        money_transfers_sorted = self.__sort_emails(Email.E_TRANSFER.value, Label.E_TRANSFERS.value)
+        ProgressBarUtil.update_progress(Label.E_TRANSFERS.value + ' sorted: ', money_transfers_sorted)
 
     def sort_online_orders(self):
-        # print('***********************************')
-        # print('***   Sorting Amazon Orders     ***')
-        # print('***********************************')
-        self.__sort_emails_from_with_parent_label(Email.AMAZON_DOMAIN.value,  Label.ONLINE_ORDERS.value, Label.AMAZON.value, Color.AMAZON_ORANGE.value)
-        ProgressBarUtil.update_progress('')
+        amazon_sorted = self.__sort_emails_from_with_parent_label(Email.AMAZON_DOMAIN.value,  Label.ONLINE_ORDERS.value, Label.AMAZON.value, Color.AMAZON_ORANGE.value)
+        ProgressBarUtil.update_progress(Label.AMAZON.value + ' sorted: ', amazon_sorted)
 
-        self.__sort_emails_from_with_parent_label(Email.INTELCOM_DOMAIN.value,  Label.ONLINE_ORDERS.value, Label.INTELCOM.value, Color.AMAZON_ORANGE.value)
-        ProgressBarUtil.update_progress('')
+        intelcom_sorted = self.__sort_emails_from_with_parent_label(Email.INTELCOM_DOMAIN.value,  Label.ONLINE_ORDERS.value, Label.INTELCOM.value, Color.AMAZON_ORANGE.value)
+        ProgressBarUtil.update_progress(Label.INTELCOM.value + ' sorted: ', intelcom_sorted)
 
     def sort_rentals(self):
-        self.__sort_emails_from_with_parent_label(Email.RENT_FASTER.value, Label.RENTALS.value, Label.RENT_FASTER.value, Color.ROYAL_BLUE.value)
-        ProgressBarUtil.update_progress('')
+        rent_faster_sorted = self.__sort_emails_from_with_parent_label(Email.RENT_FASTER.value, Label.RENTALS.value, Label.RENT_FASTER.value, Color.ROYAL_BLUE.value)
+        ProgressBarUtil.update_progress(Label.RENT_FASTER.value + ' sorted: ', rent_faster_sorted)
 
     def sort_google_emails(self):
-        self.__sort_emails_from_with_parent_label(Email.GOOGLE_SECURITY_ALERTS.value, Label.GOOGLE_ALERTS.value, Label.GOOGLE_ACCOUNT.value, Color.ROYAL_BLUE.value)
-        ProgressBarUtil.update_progress('')
+        google_account_sorted = self.__sort_emails_from_with_parent_label(Email.GOOGLE_SECURITY_ALERTS.value, Label.GOOGLE_ALERTS.value, Label.GOOGLE_ACCOUNT.value, Color.ROYAL_BLUE.value)
+        ProgressBarUtil.update_progress(Label.GOOGLE_ALERTS.value + ' (' + Label.GOOGLE_ACCOUNT.value + ') sorted: ',
+                                        google_account_sorted)
 
     def delete_emails_from(self, from_emails):
         if len(from_emails) > 0:
@@ -94,9 +92,8 @@ class EmailSortingService:
         if len(emails_found) > 0:
             working_label = label_service.create_label_if_not_found(working_label_name, label_color)
             if working_label is not None:
-                return message_service.add_messages_to_labels_and_remove_from_inbox(emails_found, [working_label['id']])
-        else:
-            return []
+                message_service.add_messages_to_labels_and_remove_from_inbox(emails_found, [working_label['id']])
+        return len(emails_found)
 
     def __sort_emails_with_subject_with_parent_label_to_sender(self,
                                                      subject,
@@ -147,7 +144,7 @@ class EmailSortingService:
                                              label_color=None):
         parent_label = label_service.create_label_if_not_found(parent_label_name, label_color)
         if parent_label is not None:
-            self.__sort_emails_from_to_working_label(from_email,
+            return self.__sort_emails_from_to_working_label(from_email,
                                                      parent_label_name + '/' + working_label_name,
                                                      label_color)
 
@@ -186,3 +183,4 @@ class EmailSortingService:
 
                 # Move current email to the label, and remove it from the inbox.
                 message_service.edit_labels(email_id, [label['id']], [Label.INBOX.value])
+        return len(emails)

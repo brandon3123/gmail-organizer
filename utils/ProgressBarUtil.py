@@ -7,12 +7,12 @@ class ProgressBarUtil:
 
     @staticmethod
     def start_progress():
-        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=16, redirect_stdout=True, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=14, redirect_stdout=True, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         ProgressBarUtil.bar.start()
 
     @staticmethod
-    def update_progress(message):
-        print(message)
+    def update_progress(message, amount_sorted):
+        print(message, amount_sorted)
         ProgressBarUtil.bar.update(ProgressBarUtil.progress)
         ProgressBarUtil.progress += 1
 

@@ -10,26 +10,24 @@ message_service = MessageService()
 class EmailDeletingService:
 
     def delete_emails(self):
-        emails_ids_to_delete = self.__email_ids_from_senders()
-        emails_ids_to_delete += self.__email_ids_with_subject()
-        message_service.delete_messages(emails_ids_to_delete)
-        ProgressBarUtil.update_progress('emails deleted: ' + str(len(emails_ids_to_delete)))
-        self.__delete_promotions()
-        ProgressBarUtil.update_progress('')
-        self.__delete_social()
-        ProgressBarUtil.update_progress('')
+        unread_emails_trashed_amount = message_service.move_unread_inbox_emails_to_trash()
+        ProgressBarUtil.update_progress('Unread emails moved to trash: ', unread_emails_trashed_amount)
+        promotion_emails_amount = self.__delete_promotions()
+        ProgressBarUtil.update_progress('Promotions delete: ', promotion_emails_amount)
+        social_emails_amount = self.__delete_social()
+        ProgressBarUtil.update_progress('Social delete: ', social_emails_amount)
 
     def __delete_promotions(self):
         promotion_emails = message_service.get_promotions()
         if len(promotion_emails) > 0:
             message_service.delete_messages(promotion_emails)
-        ProgressBarUtil.update_progress('')
+        return len(promotion_emails)
 
     def __delete_social(self):
         social_emails = message_service.get_socials()
         if len(social_emails) > 0:
             message_service.delete_messages(social_emails)
-        ProgressBarUtil.update_progress('')
+        return len(social_emails)
 
     def __email_ids_from_senders(self):
         to_delete_from = [

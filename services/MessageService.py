@@ -22,6 +22,13 @@ class MessageService:
         else:
             return []
 
+    def move_unread_inbox_emails_to_trash(self):
+        filter = FilterUtil.in_folder(Label.UNREAD.value)
+        unread_email_ids = self.message_ids_with_criteria_inside_inbox(filter)
+        if len(unread_email_ids) > 0:
+            self.move_to_tash(unread_email_ids)
+        return len(unread_email_ids)
+
     def message_ids_with_criteria_inside_inbox(self, criteria):
         filter = criteria + ' ' + FilterUtil.in_folder(Label.INBOX.value)
         messages = self.messages_with_criteria(filter)

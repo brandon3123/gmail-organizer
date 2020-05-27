@@ -7,6 +7,8 @@ class Label(Enum):
     """
     INBOX = 'INBOX'
     TRASH = 'TRASH'
+    UNREAD = 'UNREAD'
+    READ = 'READ'
     INDEED = 'Indeed'
     WORKOPOLIS = 'Workopolis'
     NEUVOO = 'Neuvoo'
