@@ -9,6 +9,7 @@ class Label(Enum):
     TRASH = 'TRASH'
     UNREAD = 'UNREAD'
     READ = 'READ'
+    SPAM = 'SPAM'
     INDEED = 'Indeed'
     WORKOPOLIS = 'Workopolis'
     NEUVOO = 'Neuvoo'

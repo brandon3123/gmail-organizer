@@ -22,9 +22,16 @@ class EmailService:
         else:
             return []
 
-    def move_unread_inbox_emails_to_trash(self):
-        filter = FilterUtil.in_folder(Label.UNREAD.value)
+    def move_emails_matching_criteria_from_inbox_to_trash(self,
+                                                          filter):
         unread_email_ids = self.email_ids_with_criteria_inside_inbox(filter)
+        if len(unread_email_ids) > 0:
+            self.move_to_tash(unread_email_ids)
+        return len(unread_email_ids)
+
+    def move_emails_matching_criteria_to_trash(self,
+                                              filter):
+        unread_email_ids = self.fetch_email_ids_matching_criteria(filter)
         if len(unread_email_ids) > 0:
             self.move_to_tash(unread_email_ids)
         return len(unread_email_ids)

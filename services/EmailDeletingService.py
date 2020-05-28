@@ -1,3 +1,4 @@
+from enums.Label import Label
 from services.EmailService import EmailService
 from utils.FilterUtil import FilterUtil
 from enums.Subject import Subject
@@ -10,8 +11,12 @@ message_service = EmailService()
 class EmailDeletingService:
 
     def delete_emails(self):
-        unread_emails_trashed_amount = message_service.move_unread_inbox_emails_to_trash()
+        unread_emails_trashed_amount = message_service.move_emails_matching_criteria_from_inbox_to_trash(
+            FilterUtil.in_folder(Label.UNREAD.value))
         ProgressBarUtil.update_progress('Unread emails moved to trash: ', unread_emails_trashed_amount)
+        spam_trashed_amount = message_service.move_emails_matching_criteria_to_trash(
+            FilterUtil.in_folder(Label.SPAM.value))
+        ProgressBarUtil.update_progress('Spam emails moved to trash: ', spam_trashed_amount)
         promotion_emails_amount = self.__delete_promotions()
         ProgressBarUtil.update_progress('Promotions delete: ', promotion_emails_amount)
         social_emails_amount = self.__delete_social()
