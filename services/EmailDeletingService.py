@@ -1,10 +1,10 @@
-from services.MessageService import MessageService
+from services.EmailService import EmailService
 from utils.FilterUtil import FilterUtil
 from enums.Subject import Subject
 from enums.Email import Email
 from utils.ProgressBarUtil import ProgressBarUtil
 
-message_service = MessageService()
+message_service = EmailService()
 
 
 class EmailDeletingService:
@@ -20,13 +20,13 @@ class EmailDeletingService:
     def __delete_promotions(self):
         promotion_emails = message_service.get_promotions()
         if len(promotion_emails) > 0:
-            message_service.delete_messages(promotion_emails)
+            message_service.delete_emails(promotion_emails)
         return len(promotion_emails)
 
     def __delete_social(self):
         social_emails = message_service.get_socials()
         if len(social_emails) > 0:
-            message_service.delete_messages(social_emails)
+            message_service.delete_emails(social_emails)
         return len(social_emails)
 
     def __email_ids_from_senders(self):
@@ -51,7 +51,7 @@ class EmailDeletingService:
 
         for email in to_delete_from:
             filter = FilterUtil.from_email(email)
-            found_emails = message_service.message_ids_with_criteria_inside_inbox(filter)
+            found_emails = message_service.email_ids_with_criteria_inside_inbox(filter)
             email_ids_to_delete += found_emails
 
         return email_ids_to_delete
@@ -65,8 +65,7 @@ class EmailDeletingService:
 
         for email in to_delete_subjects:
             filter = FilterUtil.subject(email)
-            found_emails = message_service.message_ids_with_criteria_inside_inbox(filter)
+            found_emails = message_service.email_ids_with_criteria_inside_inbox(filter)
             email_ids_to_delete += found_emails
 
         return email_ids_to_delete
-

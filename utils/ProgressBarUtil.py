@@ -7,7 +7,9 @@ class ProgressBarUtil:
 
     @staticmethod
     def start_progress():
-        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=14, redirect_stdout=True, widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+        ProgressBarUtil.bar = progressbar.ProgressBar(max_value=14, redirect_stdout=True,
+                                                      widgets=[progressbar.Bar('=', '[', ']'), ' ',
+                                                               progressbar.Percentage()])
         ProgressBarUtil.bar.start()
 
     @staticmethod
@@ -19,4 +21,3 @@ class ProgressBarUtil:
     @staticmethod
     def end_progress():
         ProgressBarUtil.bar.finish()
-

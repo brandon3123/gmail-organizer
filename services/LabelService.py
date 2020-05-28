@@ -1,7 +1,7 @@
-from apiRoutes.Labels import Labels
+from apiRoutes.LabelApi import LabelApi
 from enums.Color import Color
 
-label_api = Labels()
+label_api = LabelApi()
 
 
 class LabelService:

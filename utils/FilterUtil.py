@@ -22,4 +22,3 @@ class FilterUtil:
     @staticmethod
     def subject(subject):
         return Filter.SUBJECT.value + subject
-

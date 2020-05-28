@@ -1,7 +1,7 @@
 from apiRoutes.ApiRoute import ApiRoute
 
 
-class Labels(ApiRoute):
+class LabelApi(ApiRoute):
 
     def get_all_labels(self):
         return self.__api().list(userId='me').execute()['labels']
@@ -45,6 +45,6 @@ class Labels(ApiRoute):
 
     def __color_json(self, bg_color=None, text_color=None):
         return {
-                'textColor': text_color,
-                'backgroundColor': bg_color,
-            }
+            'textColor': text_color,
+            'backgroundColor': bg_color,
+        }

@@ -8,9 +8,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 # If modifying these scopes, delete the file token.pickle.
+# Scopes here: https://developers.google.com/gmail/api/auth/scopes
 SCOPES = [
-    'https://www.googleapis.com/auth/gmail.labels',
-    'https://www.googleapis.com/auth/gmail.modify',
     'https://mail.google.com/'
 ]
 
