@@ -24,3 +24,5 @@ class Label(Enum):
     GOOGLE_ACCOUNT = 'Account'
     RENT_FASTER = 'Rent Faster'
     RECEIPTS = 'Receipts'
+    MASTRE_MGMT = 'Mastre Mgmt'
+    MISSION_APT = 'Mission Apartment'

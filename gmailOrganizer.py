@@ -14,6 +14,7 @@ def main():
     sorting_service.sort_online_orders()
     sorting_service.sort_rentals()
     sorting_service.sort_google_emails()
+    sorting_service.sort_mission_apt_emails()
     deletion_service.delete_emails()
     ProgressBarUtil.end_progress()
 

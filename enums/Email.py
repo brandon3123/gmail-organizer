@@ -28,3 +28,4 @@ class Email(Enum):
     STACK_OVERFLOW_NO_REPLY = 'do-not-reply@stackoverflow.email'
     GOOGLE_SECURITY_ALERTS = 'no-reply@accounts.google.com'
     DIGITAL_OCEAN = 'newsletter@news.digitalocean.com'
+    MASTRE_MGMT = 'info@calgaryhomerentals.com'

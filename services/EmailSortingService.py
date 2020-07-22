@@ -63,6 +63,13 @@ class EmailSortingService:
         ProgressBarUtil.update_progress(Label.GOOGLE_ALERTS.value + ' (' + Label.GOOGLE_ACCOUNT.value + ') sorted: ',
                                         google_account_sorted)
 
+    def sort_mission_apt_emails(self):
+        mission_apt_sorted = self.__sort_emails_from_with_parent_label(Email.MASTRE_MGMT.value,
+                                                                          Label.MISSION_APT.value,
+                                                                          Label.MASTRE_MGMT.value,
+                                                                          Color.LAVENDER.value)
+        ProgressBarUtil.update_progress(Label.MISSION_APT.value + ' sorted: ', mission_apt_sorted)
+
     def delete_emails_from(self, from_emails):
         if len(from_emails) > 0:
             for sender in from_emails:

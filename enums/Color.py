@@ -6,3 +6,5 @@ class Color(Enum):
     AMAZON_ORANGE = '#ffad46'
     ROYAL_BLUE = '#4986e7'
     WHITE_GRAY = '#e7e7e7'
+    LAVENDER = '#b99aff'
+
